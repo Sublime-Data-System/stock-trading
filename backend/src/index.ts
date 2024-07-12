@@ -5,6 +5,15 @@ import 'dotenv/config';
 import cors from 'cors';
 import routes from  './routes'
 
+
+declare global {
+  namespace Express {
+    interface Request {
+      authUser: any;
+    }
+  }
+}
+
 const app: Express = express();
 
 const firebaseServiceAccount: admin.ServiceAccount = {
