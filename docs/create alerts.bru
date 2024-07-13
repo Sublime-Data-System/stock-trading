@@ -1,0 +1,20 @@
+meta {
+  name: create alerts
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{url}}/stock/alert
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "symbol": "AAPL",
+    "price": 20,
+    "direction": "greater", // or lesser
+    "email": "stocktest@yopmail.com"
+  }
+}

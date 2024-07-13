@@ -42,3 +42,6 @@ Please submit the result by 72hrs,
 - Dashboard
 - Alert Modal
 
+## API Documentation
+
+Use Bruno for API documentation
