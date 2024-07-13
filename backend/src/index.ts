@@ -1,9 +1,9 @@
 import express, { Express, Request, Response } from 'express';
-import {json} from 'body-parser'
+import { json } from 'body-parser'
 import admin from 'firebase-admin';
 import 'dotenv/config';
 import cors from 'cors';
-import routes from  './routes'
+import routes from './routes'
 
 
 declare global {

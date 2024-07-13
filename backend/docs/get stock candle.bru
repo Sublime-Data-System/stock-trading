@@ -1,0 +1,19 @@
+meta {
+  name: get stock candle
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{url}}/stock/candle
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "symbol": "AAPL",
+    //Keep this 15. Other possible values = 1, 5, 15, 30, 60, D, W, M
+    "resolution": 15 
+  }
+}

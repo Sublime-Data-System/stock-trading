@@ -1,0 +1,16 @@
+meta {
+  name: getStockSymbol
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://finnhub.io/api/v1/stock/symbol?exchange=US&token={{token}}
+  body: none
+  auth: none
+}
+
+params:query {
+  exchange: US
+  token: {{token}}
+}

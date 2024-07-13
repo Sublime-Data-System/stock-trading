@@ -1,0 +1,19 @@
+meta {
+  name: getStockCandles
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://finnhub.io/api/v1/stock/candle?symbol=AAPL&resolution=15&from=1693493346&to=1693752546&token={{token}}
+  body: none
+  auth: none
+}
+
+params:query {
+  symbol: AAPL
+  resolution: 15
+  from: 1693493346
+  to: 1693752546
+  token: {{token}}
+}
