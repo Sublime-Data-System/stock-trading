@@ -1,0 +1,117 @@
+meta {
+  name: get stock candle
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{url}}/stock/candle
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "symbol": "AAPL",
+    //Keep this 15. Other possible values = 1, 5, 15, 30, 60
+    "resolution": 15 
+  }
+}
+
+docs {
+  ## [URL](https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to)
+  
+  ## Response Attributes
+  
+  #### ticker: string *
+  The exchange symbol that this item is traded under.
+  
+  ---
+  #### adjusted: boolean *
+  
+  Whether or not this response was adjusted for splits.
+  
+  ---
+  #### queryCount: integer *
+  
+  The number of aggregates (minute or day) used to generate the response.
+  
+  ---
+  #### request_id: string *
+  
+  A request id assigned by the server.
+  
+  ---
+  
+  #### resultsCount: integer *
+  
+  The total number of results for this request.
+  
+  ---
+  
+  #### status: string *
+  
+  The status of this request's response.
+  
+  ---
+  
+  #### results: array
+  
+  ##### c: number *
+  
+  The close price for the symbol in the given time period.
+  
+  ---
+  
+  ##### h: number *
+  
+  The highest price for the symbol in the given time period.
+  
+  ---
+  
+  ##### l: number *
+  
+  The lowest price for the symbol in the given time period.
+  
+  ---
+  
+  ##### n: integer
+  
+  The number of transactions in the aggregate window.
+  
+  ---
+  
+  ##### o: number *
+  
+  The open price for the symbol in the given time period.
+  
+  ---
+  
+  ##### otc: boolean
+  
+  Whether or not this aggregate is for an OTC ticker. This field will be left off if false.
+  
+  ---
+  
+  ##### t: integer *
+  
+  The Unix Msec timestamp for the start of the aggregate window.
+  
+  ---
+  
+  ##### v: number *
+  
+  The trading volume of the symbol in the given time period.
+  
+  ---
+  
+  ##### vw: number
+  
+  The volume weighted average price.
+  
+  ---
+  
+  #### next_url: string
+  
+  If present, this value can be used to fetch the next page of data.
+}

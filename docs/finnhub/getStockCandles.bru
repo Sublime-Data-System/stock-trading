@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: https://finnhub.io/api/v1/stock/candle?symbol=AAPL&resolution=15&from=1693493346&to=1693752546&token={{token}}
+  url: https://finnhub.io/api/v1/stock/candle?symbol=AAPL&resolution=15&from=1693493346&to=1693752546&token={{finnhubAPIKey}}
   body: none
   auth: none
 }
@@ -15,5 +15,5 @@ params:query {
   resolution: 15
   from: 1693493346
   to: 1693752546
-  token: {{token}}
+  token: {{finnhubAPIKey}}
 }

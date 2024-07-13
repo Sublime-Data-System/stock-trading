@@ -1,0 +1,17 @@
+meta {
+  name: Aggregates (Bars)
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://api.polygon.io/v2/aggs/ticker/AAPL/range/15/minute/1720809000000/1720891800000?adjusted=true&sort=asc&apiKey={{polygonAPIKey}}
+  body: none
+  auth: none
+}
+
+params:query {
+  adjusted: true
+  sort: asc
+  apiKey: {{polygonAPIKey}}
+}
