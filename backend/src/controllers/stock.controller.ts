@@ -77,7 +77,6 @@ cron.schedule('* * * * *', async () => {
       .get(url)
       .then(async (response) => {
         const { c } = response.data;
-        console.log(c);
         if (direction === 'greater' && c > price) {
           await sendEmail(
             email,
