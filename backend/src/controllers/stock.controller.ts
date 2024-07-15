@@ -22,6 +22,8 @@ export const getStockCandles = async (req: Request, res: Response) => {
   try {
     const { symbol, resolution = 15 } = req.body;
     const startDate = new Date();
+    // Free plan doesn't allow fetching recent data
+    startDate.setFullYear(startDate.getFullYear() - 1);
     startDate.setHours(0, 0, 0, 0);
     const startTime = startDate.getTime();
     startDate.setHours(23, 0, 0, 0);
