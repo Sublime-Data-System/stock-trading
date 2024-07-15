@@ -7,14 +7,17 @@ meta {
 post {
   url: {{url}}/stock/alert
   body: json
-  auth: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{Token}}
 }
 
 body:json {
   {
     "symbol": "AAPL",
     "price": 20,
-    "direction": "greater", // or lesser
-    "email": "stocktest@yopmail.com"
+    "direction": "greater" // or lesser
   }
 }

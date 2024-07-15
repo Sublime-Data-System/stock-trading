@@ -11,7 +11,9 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
       return res.status(401).send({message: 'Unauthorized'});
     }
 
-    req.authUser = decodedToken
+    const user = await admin.auth().getUser(decodedToken.uid);
+
+    req.authUser = user
 
     next()
   } catch (error) {

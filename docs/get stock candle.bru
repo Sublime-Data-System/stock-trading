@@ -7,7 +7,11 @@ meta {
 post {
   url: {{url}}/stock/candle
   body: json
-  auth: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{Token}}
 }
 
 body:json {

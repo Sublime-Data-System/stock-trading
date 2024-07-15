@@ -5,8 +5,8 @@ import { getStockList, getStockCandles, setAlert } from '../controllers/stock.co
 const router: Router = Router();
 
 // TODO: Add auth middleware
-router.get('/', getStockList)
-router.post('/candle', getStockCandles)
-router.post('/alert', setAlert)
+router.get('/', auth, getStockList)
+router.post('/candle', auth, getStockCandles)
+router.post('/alert', auth, setAlert)
 
 export default router

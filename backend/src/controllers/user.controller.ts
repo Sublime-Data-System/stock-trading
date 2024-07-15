@@ -1,19 +1,29 @@
 import { Request, Response } from 'express';
-import { getFirestore } from 'firebase-admin/firestore';
+import { Filter, getFirestore } from 'firebase-admin/firestore';
 
 const register = async (req: Request, res: Response) => {
   try {
     const db = getFirestore();
-    const userExists = await db.collection('users').doc(req.authUser.email).get();
+    const userExists = await db
+      .collection('users')
+      .where( Filter.or(
+        Filter.where('uid', '==', req.authUser.uid),
+        Filter.where('email', '==', req.authUser.email)
+      ))
+      .get();
 
-    if (userExists.exists) {
+    if (!userExists.empty) {
       return res.status(409).send({ message: 'User already exists' });
     }
 
-    const user = await db.collection('users').doc(req.authUser.email).set({
-      name: req.authUser.name,
-      email: req.authUser.email
-    });
+    const user = await db
+      .collection('users')
+      .doc(req.authUser.uid)
+      .set({
+        name: req.authUser.displayName || '',
+        email: req.authUser.email,
+        uid: req.authUser.uid,
+      });
 
     return res.status(201).send({ user });
   } catch (error) {
