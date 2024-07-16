@@ -4,13 +4,7 @@ import useAuth from "../auth/useAuth";
 import usePostCandleChart from "@/services/usePostCandleChart";
 import { useRouter } from "next/router";
 
-interface TickerData {
-  Date: Date;
-  Open: number;
-  Close: number;
-  Low: number;
-  High: number;
-}
+import CandleDetails from "./candleDetails";
 
 const CandlestickChart = () => {
   const { user, loading: authLoading }: { user: any; loading: any } = useAuth();
@@ -18,7 +12,6 @@ const CandlestickChart = () => {
   const { symbol } = router.query;
 
   const svgRef = useRef<SVGSVGElement | null>(null);
-  const [candleData, setCandleData] = useState<TickerData[]>([]);
 
   const {
     mutate: createChart,
@@ -38,29 +31,11 @@ const CandlestickChart = () => {
   }, [symbol, user]);
 
   useEffect(() => {
-    if (candleResponse?.data?.results) {
-      const transformedData: TickerData[] = candleResponse.data.results.map(
-        (d: any) => ({
-          Date: new Date(d.t), // Assuming `d.t` is already in milliseconds
-          Open: d.o,
-          High: d.h,
-          Low: d.l,
-          Close: d.c,
-          Volume: d.v,
-          "Adj Close": d.c,
-        })
-      );
-      console.log(transformedData, "transformed data");
-      setCandleData(transformedData);
-    }
-  }, [candleResponse]);
-
-  useEffect(() => {
-    if (candleData.length > 0) {
-      const data = candleData;
+    if (candleResponse && candleResponse?.data?.length > 0) {
+      const data = candleResponse?.data;
 
       // Chart dimensions and margins
-      const width = 928;
+      const width = 1100;
       const height = 600;
       const marginTop = 20;
       const marginRight = 30;
@@ -155,7 +130,7 @@ const CandlestickChart = () => {
         `
       );
     }
-  }, [candleData]);
+  }, [candleResponse]);
 
   if (authLoading || isLoading) {
     return <div>Loading...</div>;
@@ -165,21 +140,34 @@ const CandlestickChart = () => {
     return <div>Error loading data: {error.message}</div>;
   }
 
+  if (!candleResponse?.data.length) {
+    return (
+      <div className="p-2 w-100 h-200 bg-slate-200 border-b-gray-100">
+        <h1 className="font-semibold">No Data Available</h1>
+      </div>
+    );
+  }
+
+  const latestEntry = candleResponse?.data[candleResponse?.data.length - 1];
+
   return (
-    <>
+    <div className="flex items-center flex-col w-full bg-white mt-[28px] border border-gray-200 rounded-lg shadow ">
       <div>
-        <h2 className="p-2">
-          Stock :{" "}
-          <span className="font-bold"> {candleResponse?.data?.ticker} </span>
+        <h2 className="my-[20px]">
+          Stock : <span className="font-bold"> {candleResponse?.ticker} </span>
         </h2>
       </div>
-      {candleResponse?.data?.results && <svg ref={svgRef}></svg>}
-      {!isLoading && !candleResponse?.data?.results && (
-        <div className="p-2 w-100 h-200 bg-slate-200 border-b-gray-100">
-          <h1 className="font-semibold">No Data Available</h1>
-        </div>
-      )}
-    </>
+
+      {candleResponse?.data && <svg ref={svgRef}></svg>}
+
+      <CandleDetails
+        open={latestEntry?.Open || 0}
+        high={latestEntry?.High || 0}
+        close={latestEntry?.Close || 0}
+        low={latestEntry?.Low || 0}
+        volume={latestEntry?.Volume || 0}
+      />
+    </div>
   );
 };
 
