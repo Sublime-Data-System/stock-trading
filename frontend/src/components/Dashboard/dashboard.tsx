@@ -10,7 +10,7 @@ import {
   TableCaption,
 } from "@/components/ui/Table"; // Adjust the path according to your project structure
 import useAuth from "../auth/useAuth";
-import useFetchStockData from "@/services/stockService";
+import useFetchStockData from "@/services/useFetchStockData";
 import { useRouter } from "next/navigation";
 
 const Dashboard: React.FC = () => {
