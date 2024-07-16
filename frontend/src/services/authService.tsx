@@ -1,18 +1,31 @@
-import axios from "axios";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth as customAuth } from "../../firebase";
 
-const API_URL = "https://your-api-url.com";
-
-export const register = (username: string, email: string, password: string) => {
-  return axios.post(`${API_URL}/register`, {
-    username,
-    email,
-    password,
-  });
+export const register = async (email: string, password: string) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      customAuth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
 };
 
-export const login = (username: string, password: string) => {
-  return axios.post(`${API_URL}/login`, {
-    username,
-    password,
-  });
+export const login = async (email: any, password: any) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      customAuth,
+      email,
+      password
+    );
+    return userCredential.user;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
 };

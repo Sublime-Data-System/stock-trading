@@ -1,21 +1,20 @@
 import { useState } from "react";
-import { register } from "../services/authService";
+import { register } from "@/services/authService";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    try {
-      const response = await register(username, email, password);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
+    const user: any = await register(email, password);
+    document.cookie = `currentUser=${user.uid}; path=/`;
+    if (user) {
+      router.push("dashboard");
     }
   };
-
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -26,25 +25,7 @@ const Register = () => {
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Username
-            </label>
-            <div className="mt-2">
-              <input
-                id="username"
-                name="username"
-                type="text"
-                onChange={(e) => setUsername(e.target.value)}
-                required
-                autoComplete="username"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
+          {/* {error && <p className="text-red-500">{error}</p>} */}
 
           <div>
             <label
