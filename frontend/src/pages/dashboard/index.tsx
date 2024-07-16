@@ -1,6 +1,8 @@
+// import Login from "@/components/auth/login";
 import Dashboard from "@/components/Dashboard/dashboard";
+import React from "react";
 
-const Home = () => {
+const index = () => {
   return (
     <div>
       <Dashboard />
@@ -8,4 +10,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default index;
