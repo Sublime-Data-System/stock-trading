@@ -19,7 +19,22 @@ const Dashboard: React.FC = () => {
 
   const { data: stockData, error, isLoading } = useFetchStockData(user);
   if (authLoading || isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="p-2.5 w-full bg-white mt-[28px] ">
+        <div>
+          <div>
+            <div className="h-7 m-2 bg-gray-300 animate-pulse w-full" />
+            <div className="h-7 m-2 bg-gray-300 animate-pulse w-full" />
+            <div className="h-7 m-2 bg-gray-300 animate-pulse w-full" />
+            <div className="h-7 m-2 bg-gray-300 animate-pulse w-full" />
+            <div className="h-7 m-2 bg-gray-300 animate-pulse w-full" />
+            <div className="h-7 m-2 bg-gray-300 animate-pulse w-full" />
+            <div className="h-7 m-2 bg-gray-300 animate-pulse w-full" />
+            <div className="h-7 m-2 bg-gray-300 animate-pulse w-full" />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
@@ -30,7 +45,7 @@ const Dashboard: React.FC = () => {
     router.push(`dashboard/${symbol}`);
   };
   return (
-    <div className="p-4 ">
+    <div className="flex items-center flex-col w-full bg-white mt-[28px] p-2.5 border border-gray-200 rounded-lg shadow ">
       <Table>
         <TableCaption>A list of financial instruments</TableCaption>
         <TableHeader>
@@ -39,13 +54,16 @@ const Dashboard: React.FC = () => {
             <TableHead>Description</TableHead>
             <TableHead>FIGI</TableHead>
             <TableHead>MIC</TableHead>
-
             <TableHead>Type</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {stockData?.data.map((item: any, index: any) => (
-            <TableRow onClick={() => handleRowClick(item.symbol)} key={index}>
+            <TableRow
+              className="cursor-pointer"
+              onClick={() => handleRowClick(item.symbol)}
+              key={index}
+            >
               <TableCell>{item.displaySymbol}</TableCell>
               <TableCell>{item.description}</TableCell>
               <TableCell>{item.figi}</TableCell>

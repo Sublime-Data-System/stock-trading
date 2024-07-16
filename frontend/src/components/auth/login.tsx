@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { login } from "../../services/authService";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -92,6 +93,15 @@ const Login = () => {
             >
               Sign in
             </button>
+          </div>
+          <div className="block text-sm font-medium leading-6 text-gray-900">
+            Don&apos;t have an Account?
+            <Link
+              href="/register"
+              className="font-semibold ml-2 text-indigo-600 hover:text-indigo-500"
+            >
+              Sign up now
+            </Link>
           </div>
         </form>
       </div>

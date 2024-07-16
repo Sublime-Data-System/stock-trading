@@ -12,6 +12,7 @@ export const register = async (email: string, password: string) => {
       password
     );
     const user = userCredential.user;
+    return user;
   } catch (error: any) {
     throw new Error(error.message);
   }
