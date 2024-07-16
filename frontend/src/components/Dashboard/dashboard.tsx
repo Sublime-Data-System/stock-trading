@@ -35,24 +35,21 @@ const Dashboard: React.FC = () => {
         <TableCaption>A list of financial instruments</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>Currency</TableHead>
-            <TableHead>Description</TableHead>
             <TableHead>Display Symbol</TableHead>
+            <TableHead>Description</TableHead>
             <TableHead>FIGI</TableHead>
             <TableHead>MIC</TableHead>
-            <TableHead>Symbol</TableHead>
+
             <TableHead>Type</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {stockData?.data.map((item: any, index: any) => (
             <TableRow onClick={() => handleRowClick(item.symbol)} key={index}>
-              <TableCell>{item.currency}</TableCell>
-              <TableCell>{item.description}</TableCell>
               <TableCell>{item.displaySymbol}</TableCell>
+              <TableCell>{item.description}</TableCell>
               <TableCell>{item.figi}</TableCell>
               <TableCell>{item.mic}</TableCell>
-              <TableCell>{item.symbol}</TableCell>
               <TableCell>{item.type}</TableCell>
             </TableRow>
           ))}

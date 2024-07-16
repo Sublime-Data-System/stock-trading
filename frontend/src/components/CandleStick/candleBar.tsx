@@ -24,6 +24,7 @@ const CandlestickChart = () => {
     mutate: createChart,
     data: candleResponse,
     error,
+    isPending: isLoading,
   } = usePostCandleChart(user);
 
   const handleCreateChart = (symbol: string) => {
@@ -156,7 +157,7 @@ const CandlestickChart = () => {
     }
   }, [candleData]);
 
-  if (authLoading) {
+  if (authLoading || isLoading) {
     return <div>Loading...</div>;
   }
 
@@ -173,9 +174,9 @@ const CandlestickChart = () => {
         </h2>
       </div>
       {candleResponse?.data?.results && <svg ref={svgRef}></svg>}
-      {!candleResponse?.data?.results && (
-        <div className="w-100 h-100 bg-slate-200 border-b-gray-100">
-          <h1></h1>
+      {!isLoading && !candleResponse?.data?.results && (
+        <div className="p-2 w-100 h-200 bg-slate-200 border-b-gray-100">
+          <h1 className="font-semibold">No Data Available</h1>
         </div>
       )}
     </>
