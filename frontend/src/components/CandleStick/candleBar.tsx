@@ -27,15 +27,15 @@ const CandlestickChart = () => {
     isPending: isLoading,
   } = usePostCandleChart(user);
 
-  const handleCreateChart = (symbol: string) => {
-    createChart(symbol);
-  };
-
   useEffect(() => {
     if (symbol && typeof symbol === "string" && user) {
+      const handleCreateChart = (symbol: string) => {
+        createChart(symbol);
+      };
+
       handleCreateChart(symbol);
     }
-  }, [symbol, user]);
+  }, [symbol, user, createChart]);
 
   useEffect(() => {
     if (candleResponse && candleResponse?.data?.length > 0) {
@@ -78,7 +78,11 @@ const CandlestickChart = () => {
       svg
         .append("g")
         .attr("transform", `translate(0,${height - marginBottom})`)
-        .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%H:%M")))
+        .call(
+          d3.axisBottom(x).tickFormat(
+            (d, i) => d3.timeFormat("%H:%M")(d as Date) // Ensure the callback matches the signature
+          )
+        )
         .call((g) => g.select(".domain").remove());
 
       // Append y axis

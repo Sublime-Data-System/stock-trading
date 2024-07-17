@@ -15,7 +15,6 @@ const Login = () => {
     try {
       const user = await login(email, password);
       document.cookie = `currentUser=${user.uid}; path=/`;
-      console.log("User signed in:", user);
       router.push("/dashboard");
     } catch (error: any) {
       console.error("Error signing in:", error);
