@@ -5,9 +5,18 @@ import { useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import queryClient from "@/components/libs/react-quries";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
+import useAuth from "@/components/auth/useAuth";
+
+const publicRoutes = ["/login", "/register"];
+const privateRoutes = ["/dashboard"];
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+
+  const pathname = usePathname();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -20,6 +29,21 @@ export default function App({ Component, pageProps }: AppProps) {
 
     return () => unsubscribe();
   }, []);
+
+  const { user, loading: authLoading }: { user: any; loading: any } = useAuth();
+
+  useEffect(() => {
+    if (user && publicRoutes.includes(pathname)) {
+      // redirect to dashbaord page
+      router.push("/dashboard");
+      // redirect to dashboard page if already logged in
+    }
+
+    if (!user && privateRoutes.includes(pathname)) {
+      router.push("/login");
+      // redirect to login page
+    }
+  }, [user, router, pathname]);
 
   return (
     <>
