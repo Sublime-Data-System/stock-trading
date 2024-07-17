@@ -24,7 +24,7 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
       router.push("/login"); // Redirect to home page after successful logout
       document.cookie =
         "currentUser=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;";
-      console.log("Logged out successfully");
+
       // Perform any additional logout actions here, such as redirecting to login page
     } catch (error: any) {
       console.error("Error logging out:", error.message);
